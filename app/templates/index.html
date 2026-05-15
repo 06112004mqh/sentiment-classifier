@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Analysis</title>
+</head>
+<body>
+
+<h1>Amazon Review Sentiment</h1>
+
+<textarea id="review" rows="5" cols="50"></textarea>
+
+<br><br>
+
+<button onclick="predictSentiment()">Predict</button>
+
+<h2 id="result"></h2>
+
+<script>
+async function predictSentiment() {
+
+    const text = document.getElementById('review').value;
+
+    const response = await fetch('http://127.0.0.1:8000/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+    });
+
+    const data = await response.json();
+
+    document.getElementById('result').innerText = data.sentiment;
+}
+</script>
+
+</body>
+</html>
